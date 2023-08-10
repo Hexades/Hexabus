@@ -1,26 +1,21 @@
 package bus
 
-type HexabusEvent interface {
-	Send(val Response)
-	Receive() Response
-}
-
-type Event struct {
+type RequestResponseEvent struct {
 	responseChannel chan Response
 }
 
-func (e *Event) getChannel() chan Response {
+func (e *RequestResponseEvent) getChannel() chan Response {
 	if e.responseChannel == nil {
 		e.responseChannel = make(chan Response, 1)
 	}
 	return e.responseChannel
 }
 
-func (e *Event) Send(val Response) {
+func (e *RequestResponseEvent) Send(val Response) {
 	e.getChannel() <- val
 }
 
-func (e *Event) Receive() Response {
+func (e *RequestResponseEvent) Receive() Response {
 	return <-e.getChannel()
 }
 func NewResponse(value any, err error) Response {
@@ -29,5 +24,5 @@ func NewResponse(value any, err error) Response {
 
 type Response struct {
 	Value any
-	Err error
+	Err   error
 }

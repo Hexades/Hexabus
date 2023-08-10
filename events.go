@@ -5,7 +5,6 @@ type RepositoryEventListener interface {
 }
 
 type RepositoryEvent interface {
-	HexabusEvent
 }
 
 type ServerEventListener interface {
@@ -13,5 +12,4 @@ type ServerEventListener interface {
 }
 
 type ServerEvent interface {
-	HexabusEvent
 }
