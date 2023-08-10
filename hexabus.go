@@ -43,7 +43,7 @@ func (bus *hexabus) AddServerListener(eventListener ServerEventListener) {
 }
 
 func (bus *hexabus) SendServerEvent(event ServerEvent) {
-	for _, channel := range bus.repositoryListenerChannels {
+	for _, channel := range bus.serverListenerChannels {
 		channel <- event
 	}
 }
