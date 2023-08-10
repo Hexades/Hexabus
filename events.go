@@ -1,33 +1,17 @@
 package bus
 
-type HexabusEvent interface {
-	Send(val Response)
-	Receive() Response
+type RepositoryEventListener interface {
+	OnRepositoryEvent(event <-chan RepositoryEvent)
 }
 
-type Event struct {
-	responseChannel chan Response
+type RepositoryEvent interface {
+	HexabusEvent
 }
 
-func (e *Event) getChannel() chan Response {
-	if e.responseChannel == nil {
-		e.responseChannel = make(chan Response, 1)
-	}
-	return e.responseChannel
+type ServerEventListener interface {
+	OnServerEvent(event <-chan ServerEvent)
 }
 
-func (e *Event) Send(val Response) {
-	e.getChannel() <- val
-}
-
-func (e *Event) Receive() Response {
-	return <-e.getChannel()
-}
-func NewResponse(value any, err error) Response {
-	return Response{value, err}
-}
-
-type Response struct {
-	Value any
-	Err error
+type ServerEvent interface {
+	HexabusEvent
 }
